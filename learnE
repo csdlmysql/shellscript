@@ -1,0 +1,11 @@
+#!/usr/bin/fish
+function learnE -d "Random vocabulary and send notify"
+    while true
+        set -e vocabulary
+        set vocabulary $vocabulary (string split \t (awk -F \t 'rand() * NR < 1 { title = $2; body = $3; num = NR} END { print num,RS,title,RS,body}' $VOCABULARY))
+        echo $vocabulary
+        notify-send -u normal -t 1000 "$vocabulary[1]: $vocabulary[2]" "$vocabulary[3]"
+        sleep 3
+    end
+end
+learnE
