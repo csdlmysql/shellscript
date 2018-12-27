@@ -17,13 +17,13 @@ end
 
 function autoreconnecVPN
     while true
-        if test (nmcli con show --active | awk '/tap0/')
+        if test (nmcli con show --active | awk '/tap0/') # tap0 is name connection otpvpn
             sleep 5
+            notify-send "VPN connected"
         else
             notify-send "VPN connecting!!!"
             configVPN
             eval command echo $passSnack | sudo -S openvpn --config vccloud-devteam.ovpn
-            notify-send "VPN connected"
         end
     end
 end
