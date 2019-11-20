@@ -20,4 +20,3 @@ function translate -d "Translate very easy with one command!" -a "Words"
     end
         
 end
-
