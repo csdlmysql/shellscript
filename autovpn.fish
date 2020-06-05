@@ -9,23 +9,22 @@ end
 
 function configVPN --description "write USER, PASSWORD to file"
     set -x otp (otpVPN)
-    set -x passVPN $otp$globalPass # globalPass universal variable
+    set -x passVPN $otp$SUFFIXES # globalPass universal variable
+    #set -x passVPN ($otp + $globalPass) # globalPass universal variable
     echo $userVPN > vpn.txt
     echo $passVPN >> vpn.txt
 end
 
-
-function autoreconnecVPN
+function connectVPN
     while true
         if test (nmcli con show --active | awk '/tap0/') # tap0 is name connection otpvpn
             sleep 5
-            notify-send "VPN connected"
         else
             notify-send "VPN connecting!!!"
             configVPN
-            eval command echo $passSnack | sudo -S openvpn --config vccloud-devteam.ovpn
+            eval command echo $passuser | sudo -S openvpn --config vccloud-devteam.ovpn
         end
     end
 end
 
-autoreconnecVPN
+connectVPN
